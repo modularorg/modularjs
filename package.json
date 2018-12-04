@@ -5,5 +5,5 @@
   "repository": "modularorg/modularjs",
   "author": "Antoine Boulanger <hello@antoineboulanger.com> (https://antoineboulanger.com)",
   "license": "MIT",
-  "bin": "src/main"
+  "bin": "src/main.js"
 }
