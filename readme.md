@@ -59,6 +59,11 @@ export default class extends module {
 }
 ```
 
+#### Modules file
+```js
+export {default as example} from './example';
+```
+
 ## Objects
 | Object | Description | Example |
 | ------ | ----------- | ------- | 
@@ -72,6 +77,18 @@ export default class extends module {
 | `this.$('query' [, 'context'])` | Module scoped query selector | `this.$('dropdown', e.currentTarget)` |
 | `this.parent('name', 'context')` | Module scoped parent selector | `this.$('item', e.currentTarget)` |
 | `this.call('function([arg])', 'module' [, 'id'])` | Call another module method | `this.call('scrollTo(top)', 'scroll', 'main')` |
+
+## Custom methods
+| Method | Description |
+| ------ | ----------- |
+| `init() { [...] }` | Automatically called on app init. Use this instead of the `constructor`, if you want to use the methods above. |
+| `destroy() { [...] }` | Automatically called on app destroy. Use this if you need to destroy anything specific. The events are already destroyed. |
+
+## App methods
+| Method | Description |
+| ------ | ----------- |
+| `this.call('init', 'app')` | Init all modules in the page. |
+| `this.call('destroy', 'app')` | Destroy all modules. |
 
 ## Examples
 #### Modal example
