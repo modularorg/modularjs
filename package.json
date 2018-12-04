@@ -1,11 +1,11 @@
 {
   "name": "modujs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A dead simple JavaScript framework for ES modules.",
   "repository": "modularorg/modularjs",
   "author": "Antoine Boulanger <hello@antoineboulanger.com> (https://antoineboulanger.com)",
   "license": "MIT",
-  "bin": "lib/main.js",
+  "main": "lib/main.js",
   "scripts": {
     "build": "babel src --out-dir lib"
   },
