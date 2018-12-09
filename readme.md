@@ -61,7 +61,7 @@ export default class extends module {
 
 #### Modules file
 ```js
-export {default as example} from './example';
+export {default as example} from './modules/example';
 ```
 
 ## Objects
