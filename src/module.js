@@ -45,7 +45,7 @@ export default class {
     mCheckEventTarget(e) {
         const event = this.events[e.type];
 
-        if (typeof event === "function") {
+        if (typeof event === "string") {
             this[event](e);
         } else {
             const data = '['+this.mAttr+']';
