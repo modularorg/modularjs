@@ -1,18 +1,20 @@
 {
   "name": "modujs",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Dead simple modular JavaScript framework for ES modules.",
   "repository": "modularorg/modularjs",
   "author": "Antoine Boulanger <hello@antoineboulanger.com> (https://antoineboulanger.com)",
   "license": "MIT",
-  "main": "dist/main.js",
-  "module": "src/main.js",
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
   "scripts": {
-    "build": "babel src -d dist"
+    "build": "rollup -c"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0"
+    "@babel/preset-env": "^7.2.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-node-resolve": "^4.0.0"
   }
 }

@@ -25,12 +25,10 @@ Just what's missing from JavaScript to seamlessly work in a modular way with the
 import modular from 'modujs';
 import * as modules from './modules';
 
-(function() {
-    const app = new modular({
-        modules: modules
-    });
-    app.init(app);
-})();
+const app = new modular({
+    modules: modules
+});
+app.init(app);
 ```
 #### Module example
 ```html
