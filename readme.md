@@ -4,7 +4,7 @@
     </a>
 </p>
 <h1 align="center">modularJS</h1>
-<p align="center">A dead simple JavaScript framework for ES modules.</p>
+<p align="center">Dead simple modular JavaScript framework for ES modules.</p>
 
 ## Installation
 ```sh
