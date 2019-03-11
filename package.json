@@ -1,6 +1,6 @@
 {
   "name": "modujs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Dead simple modular JavaScript framework for ES modules.",
   "repository": "modularorg/modularjs",
   "author": "Antoine Boulanger <hello@antoineboulanger.com> (https://antoineboulanger.com)",

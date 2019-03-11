@@ -8,7 +8,7 @@
 
 ## Installation
 ```sh
-npm install modujs -s
+npm install modujs
 ```
 
 ## Why
@@ -65,16 +65,16 @@ export {default as example} from './modules/example';
 ## Objects
 | Object | Description | Example |
 | ------ | ----------- | ------- | 
-| `this.el` | The module element | `this.el.classList.add('is-open')` |
-| `this.events` | The module events | `this.events = { click: 'open' }` |
+| `this.el` | The module element. | `this.el.classList.add('is-open')` |
+| `this.events` | The module events. | `this.events = { click: 'open' }` |
 
 
 ## Methods
 | Method | Description | Example |
 | ------ | ----------- | ------- | 
-| `this.$('query' [, 'context'])` | Module scoped query selector | `this.$('dropdown', e.currentTarget)` |
-| `this.parent('name', 'context')` | Module scoped parent selector | `this.$('item', e.currentTarget)` |
-| `this.call('function([arg])', 'module' [, 'id'])` | Call another module method | `this.call('scrollTo(top)', 'scroll', 'main')` |
+| `this.$('query'[, 'context'])` | Module scoped query selector. | `this.$('dropdown', e.currentTarget)` |
+| `this.parent('name', 'context')` | Module scoped parent selector. | `this.$('item', e.currentTarget)` |
+| `this.call('function', arg, 'module'[, 'id'])` | Call another module method. | `this.call('scrollTo', section, 'scroll', 'main')` |
 
 ## Custom methods
 | Method | Description |
@@ -85,8 +85,9 @@ export {default as example} from './modules/example';
 ## App methods
 | Method | Description |
 | ------ | ----------- |
-| `this.call('init', 'app')` | Init all modules in the page. |
-| `this.call('destroy', 'app')` | Destroy all modules. |
+| `this.call('init', 'app')` | Init all modules. |
+| `this.call('update', scope, 'app')` | Update scoped modules. |
+| `this.call('destroy'[, scope], 'app')` | Destroy all or scoped modules. |
 
 ## Examples
 #### Modal example
@@ -154,7 +155,7 @@ export default class extends module {
     }
 
     openSpecificModal() {
-        this.call('open', 'modal', 'one');
+        this.call('open', false, 'modal', 'one');
     }
 
     openAllModals() {
@@ -207,7 +208,7 @@ export default class extends module {
         } else {
             this.$('section.is-open').classList.remove('is-open');
             section.classList.add('is-open');
-            this.call('scrollto('+section+')', 'scroll', 'main');
+            this.call('scrollto', section, 'scroll', 'main');
         }
     }
 }

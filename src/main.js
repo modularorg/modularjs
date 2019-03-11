@@ -2,27 +2,21 @@ export default class {
     constructor(options) {
         this.app;
         this.modules = options.modules;
-        this.currentModules = [];
+        this.currentModules = {};
+        this.activeModules = {};
+        this.newModules = {};
+        this.moduleId = 0;
     }
 
-    init(app) {
-        this.initModules(app);
-    }
-
-    destroy() {
-        this.destroyModules();
-    }
-
-    initModules(app) {
-        const elements = document.querySelectorAll('*');
-        let currentModules = {};
-        let currentId = 0;
+    init(app, scope) {
+        const container = scope || document;
+        const elements = container.querySelectorAll('*');
 
         if (app && !this.app) {
             this.app = app;
         }
 
-        currentModules['app'] = { 'app': this.app };
+        this.activeModules['app'] = { 'app': this.app };
 
         elements.forEach((el) => {
           Array.from(el.attributes).forEach((i) => {
@@ -37,39 +31,110 @@ export default class {
 
                 if (this.modules[moduleName]) {
                     const module = new this.modules[moduleName](options);
-
-                    let id = el.getAttribute(i.name);
+                    let id = i.value;
 
                     if (!id) {
-                        currentId++;
-                        id = 'm' + currentId;
+                        this.moduleId++;
+                        id = 'm' + this.moduleId;
+                        el.setAttribute(i.name, id);
                     }
 
-                    if (currentModules[moduleName]) {
-                        Object.assign(currentModules[moduleName], { [id]: module });
+                    this.addActiveModule(moduleName, id, module);
+
+                    const moduleId = moduleName + '-' + id;
+
+                    if (scope) {
+                        this.newModules[moduleId] = module;
                     } else {
-                        currentModules[moduleName] = { [id]: module };
+                        this.currentModules[moduleId] = module;
                     }
-
-                    this.currentModules.push(module);
                 }
             }
           })
         })
 
-        this.currentModules.forEach((module) => {
-            module.mInit(currentModules);
-            module.init();
+        Object.entries(this.currentModules).forEach(([id, module]) => {
+            if (scope) {
+                const split = id.split('-');
+                const moduleName = split.shift();
+                const moduleId = split.pop();
+                this.addActiveModule(moduleName, moduleId, module);
+            } else {
+                this.initModule(module);
+            }
         });
     }
 
+    initModule(module) {
+        module.mInit(this.activeModules);
+        module.init();
+    }
+
+    addActiveModule(name, id, module) {
+        if (this.activeModules[name]) {
+            Object.assign(this.activeModules[name], { [id]: module });
+        } else {
+            this.activeModules[name] = { [id]: module };
+        }
+    }
+
+    update(scope) {
+        this.init(this.app, scope);
+
+        Object.entries(this.currentModules).forEach(([id, module]) => {
+            module.mUpdate(this.activeModules);
+        });
+
+        Object.entries(this.newModules).forEach(([id, module]) => {
+            this.initModule(module);
+        });
+
+        Object.assign(this.currentModules, this.newModules);
+    }
+
+    destroy(scope) {
+        if (scope) {
+            this.destroyScope(scope);
+        } else {
+            this.destroyModules();
+        }
+    }
+
+    destroyScope(scope) {
+        const elements = scope.querySelectorAll('*');
+
+        elements.forEach((el) => {
+            Array.from(el.attributes).forEach((i) => {
+
+                if (i.name.startsWith('data-module')) {
+                    const name = i.name.split('-').pop();
+                    const id = i.value;
+                    const moduleName = name + '-' + id;
+                    const module = this.currentModules[moduleName];
+
+                    this.destroyModule(module);
+
+                    delete this.currentModules[moduleName];
+                }
+
+            })
+        })
+
+        this.activeModules = {};
+        this.newModules = {};
+    }
+
     destroyModules() {
-        this.currentModules.forEach((module) => {
-            module.mDestroy();
-            module.destroy();
+        Object.entries(this.currentModules).forEach(([id, module]) => {
+            this.destroyModule(module);
         });
 
         this.currentModules = [];
+    }
+
+    destroyModule(module) {
+        module.mDestroy();
+        module.destroy();
     }
 }
 

@@ -2,7 +2,6 @@ export default class {
     constructor(options) {
         this.mAttr = 'data-' + options.name;
         this.el = options.el;
-        // this.els = {};
     }
 
     mInit(modules) {
@@ -12,20 +11,10 @@ export default class {
         if (this.events) {
             Object.keys(this.events).forEach((event) => this.mAddEvent(event));
         }
+    }
 
-        // const els = this.el.querySelectorAll('['+this.mAttr+']');
-
-        // els.forEach((el) => {
-        //     const name = el.getAttribute(this.mAttr);
-
-        //     if (this.els[name] instanceof Array) {
-        //         this.els[name].push(el);
-        //     } else if(this.els[name]) {
-        //         this.els[name] = [this.els[name], el];
-        //     } else {
-        //         this.els[name] = el;
-        //     }
-        // })
+    mUpdate(modules) {
+        this.modules = modules;
     }
 
     mDestroy() {
@@ -118,25 +107,17 @@ export default class {
         }
     }
 
-    call(func, mod, id)  {
-        let f = func.split('(');
-        let args;
-
-        if (f.length == 2) {
-            f[1] = f[1].slice(0, -1);
-
-            if (f[1]) {
-                args = f[1];
-            }
+    call(func, args, mod, id)  {
+        if (args && !mod) {
+            mod = args;
+            args = false;
         }
 
-        f = f[0];
-
         if (id) {
-            this.modules[mod][id][f](args);
+            this.modules[mod][id][func](args);
         } else {
             Object.keys(this.modules[mod]).forEach((id) => {
-                this.modules[mod][id][f](args);
+                this.modules[mod][id][func](args);
             });
         }
     }
