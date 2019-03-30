@@ -73,7 +73,8 @@ export {default as example} from './modules/example';
 | Method | Description | Example |
 | ------ | ----------- | ------- | 
 | `this.$('query'[, 'context'])` | Module scoped query selector. | `this.$('dropdown', e.currentTarget)` |
-| `this.parent('name', 'context')` | Module scoped parent selector. | `this.$('item', e.currentTarget)` |
+| `this.parent('name', 'context')` | Module scoped parent selector. | `this.parent('item', e.currentTarget)` |
+| `this.data('name')` | Get module data attribute. | `this.data('open')` |
 | `this.call('function', arg, 'module'[, 'id'])` | Call another module method. | `this.call('scrollTo', section, 'scroll', 'main')` |
 
 ## Custom methods
@@ -165,7 +166,7 @@ export default class extends module {
 ```
 #### Accordion example
 ```html
-<div data-module-accordion>
+<div data-module-accordion data-accordion-open="true">
     <section data-accordion="section">
         <header data-accordion="header">
             <h2>Title</h2>
@@ -195,6 +196,12 @@ export default class extends module {
             click: {
                 header: 'toggleSection'
             }
+        }
+    }
+
+    init() {
+        if (this.data('open')) {
+            this.$('section')[0].classList.add('is-open');
         }
     }
 

@@ -107,6 +107,10 @@ export default class {
         }
     }
 
+    data(name) {
+        return this.el.getAttribute(this.mAttr + '-' + name);
+    }
+
     call(func, args, mod, id)  {
         if (args && !mod) {
             mod = args;
