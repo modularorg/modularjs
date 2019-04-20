@@ -22,14 +22,22 @@ export default class {
           Array.from(el.attributes).forEach((i) => {
 
             if (i.name.startsWith('data-module')) {
-                const moduleName = i.name.split('-').pop();
-
-                const options = {
-                    el: el,
-                    name: moduleName
-                };
+                let moduleExists = false;
+                let moduleName = this.toCamel(i.name.split('-').splice(2));
 
                 if (this.modules[moduleName]) {
+                    moduleExists = true;
+                } else if (this.modules[this.toUpper(moduleName)]) {
+                    moduleName = this.toUpper(moduleName);
+                    moduleExists = true;
+                }
+
+                if (moduleExists) {
+                    const options = {
+                        el: el,
+                        name: moduleName
+                    };
+
                     const module = new this.modules[moduleName](options);
                     let id = i.value;
 
@@ -135,6 +143,14 @@ export default class {
     destroyModule(module) {
         module.mDestroy();
         module.destroy();
+    }
+
+    toCamel(arr) {
+        return arr.reduce((a, b) => a + this.toUpper(b));
+    }
+
+    toUpper(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 }
 
