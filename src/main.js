@@ -117,7 +117,7 @@ export default class {
                 if (i.name.startsWith('data-module')) {
                     const name = i.name.split('-').pop();
                     const id = i.value;
-                    const moduleName = name + '-' + id;
+                    const moduleName = this.toUpper(name) + '-' + id;
                     const module = this.currentModules[moduleName];
 
                     this.destroyModule(module);
