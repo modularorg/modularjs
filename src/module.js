@@ -107,8 +107,9 @@ export default class {
         }
     }
 
-    data(name) {
-        return this.el.getAttribute(this.mAttr + '-' + name);
+    data(name, context) {
+        const target = context || this.el;
+        return target.getAttribute(this.mAttr + '-' + name);
     }
 
     call(func, args, mod, id)  {

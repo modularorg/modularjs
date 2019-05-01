@@ -74,7 +74,7 @@ export {default as example} from './modules/example';
 | ------ | ----------- | ------- | 
 | `this.$('query'[, 'context'])` | Module scoped query selector. | `this.$('dropdown', e.currentTarget)` |
 | `this.parent('name', 'context')` | Module scoped parent selector. | `this.parent('item', e.currentTarget)` |
-| `this.data('name')` | Get module data attribute. | `this.data('open')` |
+| `this.data('name'[, 'context'])` | Get module or target data attribute. | `this.data('name', e.currentTarget)` |
 | `this.call('function', arg, 'module'[, 'id'])` | Call another module method. | `this.call('scrollTo', section, 'scroll', 'main')` |
 
 ## Custom methods
