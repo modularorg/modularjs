@@ -63,20 +63,16 @@ export default class {
     $(query, context) {
         const classIndex = query.indexOf('.');
         const idIndex = query.indexOf('#');
+        const attrIndex = query.indexOf('[');
+        const indexes = [classIndex, idIndex, attrIndex].filter(index => index != -1);
+
+        let index = false;
         let name = query;
         let more = '';
         let parent = this.el;
 
-        if (classIndex != -1 || idIndex != -1) {
-            let index;
-            if (classIndex != -1 && idIndex == -1) {
-                index = classIndex;
-            } else if (idIndex != -1 && classIndex == -1) {
-                index = idIndex;
-            } else {
-                index = Math.min(classIndex, idIndex);
-            }
-
+        if (indexes.length) {
+            index = Math.min(...indexes);
             name = query.slice(0, index);
             more = query.slice(index);
         }
