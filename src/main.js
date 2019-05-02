@@ -120,9 +120,11 @@ export default class {
                     const moduleName = this.toUpper(name) + '-' + id;
                     const module = this.currentModules[moduleName];
 
-                    this.destroyModule(module);
+                    if (module) {
+                        this.destroyModule(module);
 
-                    delete this.currentModules[moduleName];
+                        delete this.currentModules[moduleName];
+                    }
                 }
 
             })
