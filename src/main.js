@@ -23,7 +23,8 @@ export default class {
 
             if (i.name.startsWith('data-module')) {
                 let moduleExists = false;
-                let moduleName = this.toCamel(i.name.split('-').splice(2));
+                let dataName = i.name.split('-').splice(2);
+                let moduleName = this.toCamel(dataName);
 
                 if (this.modules[moduleName]) {
                     moduleExists = true;
@@ -35,7 +36,8 @@ export default class {
                 if (moduleExists) {
                     const options = {
                         el: el,
-                        name: moduleName
+                        name: moduleName,
+                        dataName: dataName.join('-')
                     };
 
                     const module = new this.modules[moduleName](options);
@@ -80,9 +82,9 @@ export default class {
 
     addActiveModule(name, id, module) {
         if (this.activeModules[name]) {
-            Object.assign(this.activeModules[name], { [id]: module });
+            Object.assign(this.activeModules[name], { [id]: module });
         } else {
-            this.activeModules[name] = { [id]: module };
+            this.activeModules[name] = { [id]: module };
         }
     }
 

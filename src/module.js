@@ -1,6 +1,6 @@
 export default class {
     constructor(options) {
-        this.mAttr = 'data-' + options.name;
+        this.mAttr = 'data-' + options.dataName;
         this.el = options.el;
     }
 
@@ -64,7 +64,7 @@ export default class {
         const classIndex = query.indexOf('.');
         const idIndex = query.indexOf('#');
         const attrIndex = query.indexOf('[');
-        const indexes = [classIndex, idIndex, attrIndex].filter(index => index != -1);
+        const indexes = [classIndex, idIndex, attrIndex].filter(index => index != -1);
 
         let index = false;
         let name = query;
