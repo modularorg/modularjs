@@ -81,13 +81,7 @@ export default class {
             parent = context;
         }
 
-        const els = parent.querySelectorAll('[' + this.mAttr + '=' + name + ']' + more);
-
-        if (els.length == 1) {
-            return els[0];
-        } else {
-            return els;
-        }
+        return parent.querySelectorAll('[' + this.mAttr + '=' + name + ']' + more);
     }
 
     parent(query, context) {
