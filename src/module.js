@@ -1,6 +1,7 @@
 export default class {
     constructor(options) {
         this.mAttr = 'data-' + options.dataName;
+        this.mCaptureEvents = ['mouseenter', 'mouseleave'];
         this.el = options.el;
     }
 
@@ -24,11 +25,15 @@ export default class {
     }
 
     mAddEvent(event) {
-        this.el.addEventListener(event, this.mCheckEventTarget);
+        const capture = this.mCaptureEvents.includes(event) ? true : false;
+
+        this.el.addEventListener(event, this.mCheckEventTarget, capture);
     }
 
     mRemoveEvent(event) {
-        this.el.removeEventListener(event, this.mCheckEventTarget);
+        const capture = this.mCaptureEvents.includes(event) ? true : false;
+
+        this.el.removeEventListener(event, this.mCheckEventTarget, capture);
     }
 
     mCheckEventTarget(e) {
@@ -40,23 +45,32 @@ export default class {
             const data = '['+this.mAttr+']';
             let target = e.target;
 
-            while (target && target !== document) {
-                if (target.matches(data)) {
-                    const name = target.getAttribute(this.mAttr);
-
-                    if (event.hasOwnProperty(name)) {
-                        const method = event[name];
-
-                        Object.defineProperty(e, 'currentTarget', {value: target});
-
-                        this[method](e);
-
-                        break;
-                    }
+            if (this.mCaptureEvents.includes(e.type)) {
+                if(target.matches(data)) {
+                    this.mCallEventMethod(e, event, target);
                 }
-
-                target = target.parentNode;
+            } else {
+                while (target && target !== document) {
+                    if (target.matches(data)) {
+                        if(this.mCallEventMethod(e, event, target) != 'undefined') {
+                            break;
+                        }
+                    }
+                    target = target.parentNode;
+                }
             }
+        }
+    }
+
+    mCallEventMethod(e, event, target) {
+        const name = target.getAttribute(this.mAttr);
+
+        if (event.hasOwnProperty(name)) {
+            const method = event[name];
+
+            Object.defineProperty(e, 'currentTarget', {value: target});
+
+            this[method](e);
         }
     }
 
