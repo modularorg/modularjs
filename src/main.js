@@ -117,13 +117,20 @@ export default class {
             Array.from(el.attributes).forEach((i) => {
 
                 if (i.name.startsWith('data-module')) {
-                    const name = i.name.split('-').pop();
                     const id = i.value;
-                    const moduleName = this.toUpper(name) + '-' + id;
-                    const module = this.currentModules[moduleName];
+                    const dataName = i.name.split('-').splice(2);
+                    let moduleName = this.toCamel(dataName) + '-' + id;
+                    let moduleExists = false;
 
-                    if (module) {
-                        this.destroyModule(module);
+                    if (this.currentModules[moduleName]) {
+                        moduleExists = true;
+                    } else if (this.currentModules[this.toUpper(moduleName)]) {
+                        moduleName = this.toUpper(moduleName);
+                        moduleExists = true;
+                    }
+
+                    if (moduleExists) {
+                        this.destroyModule(this.currentModules[moduleName]);
 
                         delete this.currentModules[moduleName];
                     }
