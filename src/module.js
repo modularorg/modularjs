@@ -116,18 +116,22 @@ export default class {
         return target.getAttribute(this.mAttr + '-' + name);
     }
 
-    call(func, args, mod, id)  {
+    call(func, args, mod, id) {
         if (args && !mod) {
             mod = args;
             args = false;
         }
 
-        if (id) {
-            this.modules[mod][id][func](args);
-        } else {
-            Object.keys(this.modules[mod]).forEach((id) => {
-                this.modules[mod][id][func](args);
-            });
+        if (this.modules[mod]) {
+            if (id) {
+                if (this.modules[mod][id]) {
+                    this.modules[mod][id][func](args);
+                }
+            } else {
+                Object.keys(this.modules[mod]).forEach((id) => {
+                    this.modules[mod][id][func](args);
+                });
+            }
         }
     }
 
