@@ -69,6 +69,7 @@ export default class {
             const method = event[name];
 
             Object.defineProperty(e, 'currentTarget', {value: target});
+            Object.defineProperty(e, 'curTarget', {value: target}); // For IE 11
 
             this[method](e);
         }
