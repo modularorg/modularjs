@@ -112,9 +112,14 @@ export default class {
         }
     }
 
-    data(name, context) {
+    getData(name, context) {
         const target = context || this.el;
         return target.getAttribute(this.mAttr + '-' + name);
+    }
+
+    setData(name, value, context) {
+        const target = context || this.el;
+        return target.setAttribute(this.mAttr + '-' + name, value);
     }
 
     call(func, args, mod, id) {
