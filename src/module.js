@@ -141,6 +141,18 @@ export default class {
         }
     }
 
+    on(e, mod, func, id) {
+        if (this.modules[mod]) {
+            if (id) {
+                this.modules[mod][id].el.addEventListener(e, o => func(o));
+            } else {
+                Object.keys(this.modules[mod]).forEach((i) => {
+                    this.modules[mod][i].el.addEventListener(e, o => func(o));
+                })
+            }
+        }
+    }
+
     init() {
 
     }

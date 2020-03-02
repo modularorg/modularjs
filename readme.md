@@ -75,6 +75,7 @@ export {default as example} from './modules/example';
 | `this.$('query'[, 'context'])` | Module scoped query selector. | `this.$('dropdown', e.currentTarget)` |
 | `this.parent('name', 'context')` | Module scoped parent selector. | `this.parent('item', e.currentTarget)` |
 | `this.call('function', arg, 'module'[, 'id'])` | Call another module method. | `this.call('scrollTo', section, 'scroll', 'main')` |
+| `this.on('event', 'module', function[, 'id'])` | Listen to another module event. | `this.on('select', 'Select', this.changeSomething, 'first')` |
 | `this.getData('name'[, 'context'])` | Get module or target data attribute. | `this.getData('name', e.currentTarget)` |
 | `this.setData('name', 'value'[, 'context'])` | Set module or target data attribute. | `this.setData('name', 'value', e.currentTarget)` |
 
