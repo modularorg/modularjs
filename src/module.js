@@ -68,8 +68,12 @@ export default class {
         if (event.hasOwnProperty(name)) {
             const method = event[name];
 
-            Object.defineProperty(e, 'currentTarget', {value: target});
-            Object.defineProperty(e, 'curTarget', {value: target}); // For IE 11
+            if (!e.hasOwnProperty('currentTarget')) {
+                Object.defineProperty(e, 'currentTarget', {value: target});
+            }
+            if (!e.hasOwnProperty('curTarget')) {
+                Object.defineProperty(e, 'curTarget', {value: target}); // For IE 11
+            }
 
             this[method](e);
         }
