@@ -105,7 +105,7 @@ export default class {
 
     parent(query, context) {
         const data = '[' + this.mAttr + '=' + query + ']';
-        let parent = context;
+        let parent = context.parentNode;
 
         while (parent && parent !== document) {
             if (parent.matches(data)) {
