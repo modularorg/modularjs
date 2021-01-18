@@ -202,7 +202,7 @@ export default class extends module {
     }
 
     init() {
-        if (this.data('open')) {
+        if (this.getData('open')) {
             this.$('section')[0].classList.add('is-open');
         }
     }
